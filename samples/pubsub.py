@@ -9,12 +9,35 @@ import threading
 import time
 from uuid import uuid4
 import json
+import datetime
+import random
 
 # This sample uses the Message Broker for AWS IoT to send and receive messages
 # through an MQTT connection. On startup, the device connects to the server,
 # subscribes to a topic, and begins publishing messages to that topic.
 # The device should receive those same messages back from the message broker,
 # since it is subscribed to that same topic.
+
+def creat_sensor_data():
+    x = datetime.datetime.now()
+    mockdata_list = []
+    while len(mockdata_list) <= 4:
+        num = round(random.uniform(0, 100),1)
+        mockdata_list.append(num)
+    sensor_data = {
+        "record_date": x.strftime("%x"),
+        "record_time": x.strftime("%X"),
+        "device_id": str(random.randint(1,5)),
+        "pH": round(random.uniform(0, 14),1),
+        "EC": round(random.uniform(0, 1),3),
+        "DO": mockdata_list[1],
+        "temperature":round(random.uniform(0, 40),1) ,
+        "turbidity": mockdata_list[1],
+        "TDS": mockdata_list[2],
+        "flow": mockdata_list[3],
+        "level": mockdata_list[4]
+    }
+    return sensor_data
 
 parser = argparse.ArgumentParser(description="Send and receive messages through and MQTT connection.")
 parser.add_argument('--endpoint', default="a1vgq6tp09249f-ats.iot.us-west-2.amazonaws.com", help="Your AWS IoT custom endpoint, not including a port. " +
@@ -27,7 +50,7 @@ parser.add_argument('--root-ca', default="root-CA.crt", help="File path to root 
                                       "your trust store.")
 parser.add_argument('--client-id', default="test-" + str(uuid4()), help="Client ID for MQTT connection.")
 parser.add_argument('--topic', default="water_sensor1", help="Topic to subscribe to, and publish messages to.")
-parser.add_argument('--message', default="123123123!", help="Message to publish. " +
+parser.add_argument('--message', default=creat_sensor_data(), help="Message to publish. " +
                                                               "Specify empty string to publish nothing.")
 parser.add_argument('--count', default=10, type=int, help="Number of messages to publish/receive before exiting. " +
                                                           "Specify 0 to run forever.")
