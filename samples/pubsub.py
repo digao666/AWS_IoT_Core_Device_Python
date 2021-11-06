@@ -17,7 +17,7 @@ import json
 # since it is subscribed to that same topic.
 
 parser = argparse.ArgumentParser(description="Send and receive messages through and MQTT connection.")
-parser.add_argument('--endpoint', required=True, help="Your AWS IoT custom endpoint, not including a port. " +
+parser.add_argument('--endpoint', default="a1vgq6tp09249f-ats.iot.us-west-2.amazonaws.com", help="Your AWS IoT custom endpoint, not including a port. " +
                                                       "Ex: \"abcd123456wxyz-ats.iot.us-east-1.amazonaws.com\"")
 parser.add_argument('--port', type=int, help="Specify port. AWS IoT supports 443 and 8883.")
 parser.add_argument('--cert', help="File path to your client certificate, in PEM format.")
@@ -26,7 +26,7 @@ parser.add_argument('--root-ca', help="File path to root certificate authority, 
                                       "Necessary if MQTT server uses a certificate that's not already in " +
                                       "your trust store.")
 parser.add_argument('--client-id', default="test-" + str(uuid4()), help="Client ID for MQTT connection.")
-parser.add_argument('--topic', default="test/topic", help="Topic to subscribe to, and publish messages to.")
+parser.add_argument('--topic', default="water_sensor1", help="Topic to subscribe to, and publish messages to.")
 parser.add_argument('--message', default="Hello World!", help="Message to publish. " +
                                                               "Specify empty string to publish nothing.")
 parser.add_argument('--count', default=10, type=int, help="Number of messages to publish/receive before exiting. " +
@@ -34,7 +34,7 @@ parser.add_argument('--count', default=10, type=int, help="Number of messages to
 parser.add_argument('--use-websocket', default=False, action='store_true',
     help="To use a websocket instead of raw mqtt. If you " +
     "specify this option you must specify a region for signing.")
-parser.add_argument('--signing-region', default='us-east-1', help="If you specify --use-web-socket, this " +
+parser.add_argument('--signing-region', default='us-west-2', help="If you specify --use-web-socket, this " +
     "is the region that will be used for computing the Sigv4 signature")
 parser.add_argument('--proxy-host', help="Hostname of proxy to connect to.")
 parser.add_argument('--proxy-port', type=int, default=8080, help="Port of proxy to connect to.")
