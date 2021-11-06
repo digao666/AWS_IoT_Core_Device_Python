@@ -1,0 +1,13 @@
+[Unit]
+Description=YVR water sensor simulator
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=10
+User=ec2-user
+WorkingDirectory=/home/ec2-user/yvr-sensor-python/samples
+ExecStart=/usr/bin/python3 /home/ec2-user/yvr-sensor-python/samples/pubsub.py
+
+[Install]
+WantedBy=multi-user.target

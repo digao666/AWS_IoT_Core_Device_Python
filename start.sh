@@ -29,5 +29,5 @@ fi
 #fi
 
 # run pub/sub sample app using certificates downloaded in package
-printf "\nRunning pub/sub sample application...\n"
-python3 samples/pubsub.py --endpoint a1vgq6tp09249f-ats.iot.us-west-2.amazonaws.com --root-ca root-CA.crt --cert YVR_water_sensor2.cert.pem --key YVR_water_sensor2.private.key
+printf "\nRunning YVR water sensor simulator ...\n"
+python3 pubsub.py
