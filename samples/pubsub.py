@@ -50,9 +50,9 @@ parser.add_argument('--root-ca', default="root-CA.crt", help="File path to root 
                                       "your trust store.")
 parser.add_argument('--client-id', default="test-" + str(uuid4()), help="Client ID for MQTT connection.")
 parser.add_argument('--topic', default="water_sensor1", help="Topic to subscribe to, and publish messages to.")
-parser.add_argument('--message', default=creat_sensor_data(), help="Message to publish. " +
+parser.add_argument('--message', default="Data", help="Message to publish. " +
                                                               "Specify empty string to publish nothing.")
-parser.add_argument('--count', default=10, type=int, help="Number of messages to publish/receive before exiting. " +
+parser.add_argument('--count', default=1, type=int, help="Number of messages to publish/receive before exiting. " +
                                                           "Specify 0 to run forever.")
 parser.add_argument('--use-websocket', default=False, action='store_true',
     help="To use a websocket instead of raw mqtt. If you " +
@@ -177,7 +177,8 @@ if __name__ == '__main__':
 
         publish_count = 1
         while (publish_count <= args.count) or (args.count == 0):
-            message = "{} [{}]".format(args.message, publish_count)
+
+            message = creat_sensor_data()
             print("Publishing message to topic '{}': {}".format(args.topic, message))
             message_json = json.dumps(message)
             mqtt_connection.publish(
